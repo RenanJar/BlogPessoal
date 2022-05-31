@@ -2,6 +2,7 @@ package com.example.blogpessoal.Controller;
 
 import com.example.blogpessoal.Model.PostagemModel;
 import com.example.blogpessoal.Repository.PostagemRepository;
+import com.example.blogpessoal.Repository.TemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,9 @@ public class PostagemController {
     @Autowired
     private PostagemRepository postagemRepository;
 
+    @Autowired
+    private TemaRepository temaRepository;
+
     @GetMapping
     public ResponseEntity<List<PostagemModel>> getAll(){
         return ResponseEntity.ok(postagemRepository.findAll());
@@ -37,13 +41,20 @@ public class PostagemController {
 
     @PostMapping
     public ResponseEntity<PostagemModel>postPostagem(@Valid @RequestBody PostagemModel postagem){
+        if(postagem.getTema().getId()==null || !temaRepository.existsById(postagem.getTema().getId())){
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
     }
 
     @PutMapping
     public ResponseEntity<PostagemModel>putPostagem(@Valid @RequestBody PostagemModel postagem){
-       if(postagem.getId() == null)
-           return ResponseEntity.notFound().build();
+           if(postagem.getId() ==null ||
+                   postagem.getTema().getId()==null ||
+                   !temaRepository.existsById(postagem.getTema().getId())){
+               return ResponseEntity.badRequest().build();
+           }
+
        return postagemRepository.findById(postagem.getId())
                    .map(resposta -> ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem)))
                    .orElse(ResponseEntity.notFound().build());

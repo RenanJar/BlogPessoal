@@ -1,5 +1,6 @@
 package com.example.blogpessoal.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,5 +31,9 @@ public class PostagemModel {
 
         @UpdateTimestamp
         private LocalDateTime data;
+
+        @ManyToOne
+        @JsonIgnoreProperties("postagem")
+        private TemaModel tema;
 
 }
