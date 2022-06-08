@@ -36,4 +36,8 @@ public class PostagemModel {
         @JsonIgnoreProperties("postagem")
         private TemaModel tema;
 
+        @ManyToOne
+        @JsonIgnoreProperties("postagem")
+        private UsuarioModel usuario;
+
 }
