@@ -46,7 +46,7 @@ public class UsuarioService {
     public Optional<UsuarioLoginModel> autenticarUsuario(Optional<UsuarioLoginModel> usuarioLogin) {
         Optional<UsuarioModel> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
         if (usuario.isPresent()) {
-            if (compararSenhas(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
+            if (compararSenhas(usuarioLogin.get().getSenha(), usuario.get().getSenha())){
                 usuarioLogin.get().setId(usuario.get().getId());
                 usuarioLogin.get().setNome(usuario.get().getNome());
                 usuarioLogin.get().setFoto(usuario.get().getFoto());
@@ -57,6 +57,8 @@ public class UsuarioService {
         }
         return Optional.empty();
     }
+
+
 
 
     private String criptografarSenha(String senha) {
