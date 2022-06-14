@@ -123,8 +123,8 @@ public class UsuarioControllerTests {
         @Order(5)
         @DisplayName("Logar usuario")
         public void develogarusuario(){
-            HttpEntity<UsuarioModel> requisicao =
-                    new HttpEntity<UsuarioModel>(new UsuarioModel("ricardo_marques@email.com.br",
+            HttpEntity<UsuarioLoginModel> requisicao =
+                    new HttpEntity<UsuarioLoginModel>(new UsuarioLoginModel("ricardo_marques@email.com.br",
                             "ricardo123"));
 
             ResponseEntity<String> response= testRestTemplate
@@ -132,7 +132,6 @@ public class UsuarioControllerTests {
                             .exchange("/usuarios/logar",HttpMethod.POST,requisicao,String.class);
 
              assertEquals(HttpStatus.OK,response.getStatusCode());
-
         }
 
 

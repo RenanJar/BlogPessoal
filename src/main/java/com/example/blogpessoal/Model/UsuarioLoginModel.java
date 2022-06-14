@@ -23,7 +23,10 @@ public class UsuarioLoginModel {
         this.token = token;
     }
 
-
+    public UsuarioLoginModel(String usuario,String senha){
+        this.usuario = usuario;
+        this.senha= senha;
+    }
 
     public UsuarioLoginModel(){}
 }

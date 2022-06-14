@@ -1,5 +1,6 @@
 package com.example.blogpessoal.Controller;
 
+import com.example.blogpessoal.Model.PostagemModel;
 import com.example.blogpessoal.Model.TemaModel;
 import com.example.blogpessoal.Repository.TemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class TemaController {
         return temaRepository.findById(id)
                 .map(resposta -> ResponseEntity.ok(resposta))
                 .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @GetMapping("/descricao/{descricao}")
+    public ResponseEntity<List<TemaModel>>getByTitulo(@PathVariable String descricao){
+        return ResponseEntity.ok(temaRepository.findAllByDescricaoContainingIgnoreCase(descricao));
     }
 
     @PutMapping
